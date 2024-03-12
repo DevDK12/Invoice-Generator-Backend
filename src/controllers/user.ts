@@ -85,21 +85,25 @@ export const postLoginUser = CatchAsync(async (
         userId: user._id.toString(),
         userName: user.name,
     }, secret!, access_token_expiry)
-    
-    
 
+
+    const userRes = {
+        _id: user._id.toString(),
+        name: user.name,
+        email: user.email,
+    }
 
     console.log('Successfully logged-in ', user._id.toString());
+    const expiry = parseInt(access_token_expiry);
 
     res.status(201).json({
         status: 'success',
         message: 'User Loggedin successfully',
         data: {
+            user: userRes,
             accessToken,
-            expiryTime: access_token_expiry,
+            expiryTime: new Date(Date.now() + expiry * 60 * 1000).toISOString(),
         }
     });
-
 });
-
 
