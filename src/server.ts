@@ -9,7 +9,7 @@ import mongoConnect from './utils/database.js';
 
 
 
-
+export const secret = process.env.ACCESS_TOKEN_SECRET;
 
 const port = process.env.PORT || 3000;
 const base_url = process.env.BASE_URL || 'http://localhost';

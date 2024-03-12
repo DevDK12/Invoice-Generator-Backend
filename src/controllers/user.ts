@@ -1,10 +1,12 @@
 import { NextFunction, Request, Response } from "express";
 import { postLoginUserTypes, postRegisterUserTypes } from "../types/user-types.js";
-import User from "../models/usesr.js";
+import User from "../models/user.js";
 import CatchAsync from "../error/catchAsync.js";
-import { genHashedPassword, verifyPassword } from "../utils/features.js";
+import { genHashedPassword, getAccessToken, verifyPassword } from "../utils/features.js";
 import AppError from "../error/appError.js";
 import { validationResult } from "express-validator";
+import { access_token_expiry } from "../utils/constants.js";
+import { secret } from "../server.js";
 
 
 
@@ -74,15 +76,28 @@ export const postLoginUser = CatchAsync(async (
     const { password: hashedPassword } = user;
     const isMatch = await verifyPassword(password, hashedPassword);
 
-    if(!isMatch){
+    if (!isMatch) {
         throw new AppError('Wrong password entered!', 401);
     }
+
+
+    const accessToken = getAccessToken({
+        userId: user._id.toString(),
+        userName: user.name,
+    }, secret!, access_token_expiry)
+    
+    
+
 
     console.log('Successfully logged-in ', user._id.toString());
 
     res.status(201).json({
         status: 'success',
         message: 'User Loggedin successfully',
+        data: {
+            accessToken,
+            expiryTime: access_token_expiry,
+        }
     });
 
 });
