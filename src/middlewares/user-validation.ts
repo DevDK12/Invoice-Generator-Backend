@@ -1,5 +1,5 @@
 import { body } from 'express-validator';
-import User from '../models/usesr.js';
+import User from '../models/user.js';
 import AppError from '../error/appError.js';
 
 
@@ -10,8 +10,8 @@ export const registerValidators = [
         .isEmail()
         .withMessage('Please enter a valid email')
         .custom(async email => {
-            const user = await User.find({email});
-            if(user){
+            const user = await User.find({ email });
+            if (user) {
                 throw new AppError('User already exists', 422);
             }
         }),
@@ -41,7 +41,7 @@ export const loginValidators = [
     body('email')
         .isEmail()
         .withMessage('Please enter a valid email'),
-        
+
     body('password')
         .trim()
         .isLength({ min: 5 })
