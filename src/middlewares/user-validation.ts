@@ -10,7 +10,7 @@ export const registerValidators = [
         .isEmail()
         .withMessage('Please enter a valid email')
         .custom(async email => {
-            const user = await User.find({ email });
+            const user = await User.findOne({ email });
             if (user) {
                 throw new AppError('User already exists', 422);
             }
