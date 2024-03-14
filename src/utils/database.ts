@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 
 
 
-export const pingDB = ()=>{
+export const pingDB = () => {
     const readyState = mongoose.connection.readyState;
 
     if (readyState === 1 || readyState === 2) {
@@ -22,7 +22,8 @@ const mongoConnect = async (url: string, server: () => void) => {
 
     try {
         await mongoose.connect(url, {
-            dbName: 'Invoice_DB',
+            // dbName: 'Invoice_DB',
+            dbName: 'Ecommerce_DB',
         });
 
         pingDB();
