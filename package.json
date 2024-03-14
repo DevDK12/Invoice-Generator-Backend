@@ -39,7 +39,8 @@
     "@types/morgan": "^1.9.9",
     "@types/node": "^20.11.20",
     "@types/uuid": "^9.0.8",
-    "@types/validator": "^13.11.9"
+    "@types/validator": "^13.11.9",
+    "typescript": "^5.4.2"
   },
   "description": ""
 }
